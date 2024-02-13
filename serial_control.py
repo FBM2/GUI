@@ -41,7 +41,8 @@ class Serial_control():
         except:
             pass  # XXX errors on shutdown
 
-    def __flush__(self):
+    @ property
+    def flush(self):
         self.sp.flush()
 
     def open(self):
@@ -63,7 +64,7 @@ class Serial_control():
         if self.log is not None:
             self.log.info("{}: closing...".format(self.comm_port))
         self.alive = False
-        self.sp.__flush__
+        self.sp.flush
         self.sp.close()
 
         if self.on_close is not None:
@@ -91,7 +92,7 @@ class Serial_control():
             l = self.sp.write(cmd)
 
             if l != len(cmd):
-                self.sp.flush()  # nominally, waits until all data is written
+                self.sp.flush # nominally, waits until all data is written
 
             if self.verbose:
                 print('send_cmd("',cmd,'")', sep='',end='')
